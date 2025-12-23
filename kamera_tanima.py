@@ -7,6 +7,7 @@ model = torch.hub.load(
     'yolov5s',
     pretrained=True
 )
+notepad .gitignore
 
 # Kamera açımı
 cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
