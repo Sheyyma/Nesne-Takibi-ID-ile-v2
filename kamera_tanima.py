@@ -1,13 +1,9 @@
-import torch
 import cv2
+import torch
 
-# YOLOv5 hazır modeli 
-model = torch.hub.load(
-    'ultralytics/yolov5',
-    'yolov5s',
-    pretrained=True
-)
-notepad .gitignore
+# YOLOv5 hazır modeli
+model = torch.hub.load("ultralytics/yolov5", "yolov5s", pretrained=True)
+notepad.gitignore
 
 # Kamera açımı
 cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
