@@ -6,21 +6,13 @@ from deep_sort_realtime.deepsort_tracker import DeepSort
 def main():
     # ---------------- YOLOv5 ----------------
     print("YOLOv5 yükleniyor...")
-    model = torch.hub.load(
-        "ultralytics/yolov5",
-        "yolov5s",
-        pretrained=True
-    )
+    model = torch.hub.load("ultralytics/yolov5", "yolov5s", pretrained=True)
 
-    model.conf = 0.4        # güven eşiği
-    model.classes = [0]    # sadece person
+    model.conf = 0.4  # güven eşiği
+    model.classes = [0]  # sadece person
 
     # ---------------- TRACKER ----------------
-    tracker = DeepSort(
-        max_age=30,
-        n_init=3,
-        max_iou_distance=0.7
-    )
+    tracker = DeepSort(max_age=30, n_init=3, max_iou_distance=0.7)
 
     # ---------------- KAMERA ----------------
     cap = cv2.VideoCapture(0)
@@ -45,9 +37,7 @@ def main():
             w = x2 - x1
             h = y2 - y1
 
-            detections.append(
-                ([x1, y1, w, h], conf.item(), "person")
-            )
+            detections.append(([x1, y1, w, h], conf.item(), "person"))
 
         # TRACKING (ID burada geliyor)
         tracks = tracker.update_tracks(detections, frame=frame)
@@ -60,15 +50,7 @@ def main():
             l, t, r, b = map(int, track.to_ltrb())
 
             cv2.rectangle(frame, (l, t), (r, b), (0, 255, 0), 2)
-            cv2.putText(
-                frame,
-                f"ID: {track_id}",
-                (l, t - 10),
-                cv2.FONT_HERSHEY_SIMPLEX,
-                0.8,
-                (0, 255, 0),
-                2
-            )
+            cv2.putText(frame, f"ID: {track_id}", (l, t - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
 
         cv2.imshow("YOLO Person Tracking", frame)
 
